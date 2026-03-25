@@ -12,7 +12,15 @@
 abcdef {
      color: cs275
 }
+body {
+     font-family: sans-serif;
+     line-height: 2rem;
+}
 h1 {
      font-size: 2rem;
      line-height: 1.875rem;
+}
+.carousel-slides{
+     max-width: 640px;
+
 }
