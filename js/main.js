@@ -12,10 +12,10 @@
 window.onload = () => {
        alert('Test');
 }
-let body = document.querySelector('body');
-    script = document.createElement('script');
-    _artist = document.getElementById('artist');
-    _album = document.getElementById('album');
-    _review = document.getElementById('review');
-    _source = document.getElementById('source');
-    _url = document.getElementById('url');
+//let body = document.querySelector('body');
+    //script = document.createElement('script');
+    //_artist = document.getElementById('artist');
+    //_album = document.getElementById('album');
+    //_review = document.getElementById('review');
+    //_source = document.getElementById('source');
+    //_url = document.getElementById('url');
