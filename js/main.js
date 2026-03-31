@@ -15,4 +15,4 @@ window.onload = () => {
 let body = document.querySelector('body');
 let artist = document.getElementById('artist');
 let album = document.getElementById('album');
-let
+//let
