@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // -----------------------------------------------------------------------------
 // This file includes deliberate formatting errors in order for you to verify
 // that ESLint and EditorConfig are working properly. If both tools are, indeed,
@@ -9,10 +10,69 @@
 //
 // DON’T PROCEED UNTIL YOU’RE SURE ESLINT AND EDITORCONFIG ARE WORKING CORRECTLY
 // -----------------------------------------------------------------------------
+let activeSlide = 0;
+let body = document.querySelector("body");
+
+// eslint-disable-next-line no-unused-vars
+let siteData = (loader) => {
+    let slideBoundingBox = document.querySelector(".carousel-slides");
+    let arrowButtonBase = document.querySelectorAll(".carousel-navigation a")
+
+    let leftArrow = arrowButtonBase[0];
+    let rightArrow = arrowButtonBase[1];
+
+    let displaySlideContents = () => {
+        let current = loader[activeSlide];
+        slideBoundingBox.innerHTML = "";
+        let albumSlide = document.createElement("div");
+        let albumTitle = document.createElement("h2");
+        let albumImage = document.createElement("img");
+        let albumReview = document.createElement("p");
+        albumSlide.className = "slide";
+
+        albumTitle.textContent = current.artist + " - " + current.album;
+        albumImage.src = current.cover_image.path;
+        albumImage.alt = current.cover_image.alt_content;
+        albumReview.textContent = current.review.content;
+
+        albumSlide.appendChild(albumTitle);
+        albumSlide.appendChild(albumReview);
+        albumSlide.appendChild(albumImage);
+        slideBoundingBox.appendChild(albumSlide);
+    };
+    leftArrow.onclick = (event) => {
+        event.preventDefault();
+        if (activeSlide > 0) {
+            activeSlide = activeSlide - 1;
+            displaySlideContents();
+        }
+    };
+    displaySlideContents();
+    rightArrow.onclick = (event) => {
+        event.preventDefault();
+        if (activeSlide < loader.length-1){
+            activeSlide = activeSlide + 1;
+            displaySlideContents();
+        }
+    };
+    document.onkeydown = (event) => {
+        if (event.key == "ArrowLeft"){
+            if (activeSlide > 0){
+                activeSlide = activeSlide - 1;
+                displaySlideContents();
+            }
+        }
+        if (event.key == "ArrowRight"){
+            if (activeSlide < loader.length-1){
+                activeSlide = activeSlide + 1;
+                displaySlideContents();
+            }
+        }
+    };
+
+};
 window.onload = () => {
-       alert('Test');
-}
-let body = document.querySelector('body');
-let artist = document.getElementById('artist');
-let album = document.getElementById('album');
-//let
+    script = document.createElement(`script`);
+    script.setAttribute(`src`, `json/data.json`);
+    body.appendChild(script);
+};

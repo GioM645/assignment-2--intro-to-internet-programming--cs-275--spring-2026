@@ -12,7 +12,6 @@ const {src, dest, series} = require('gulp'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
     GulpCleanCss = require('gulp-clean-css');
-
     let userBrowser = 'default';
 
     async function firefox () {
@@ -47,24 +46,39 @@ const {src, dest, series} = require('gulp'),
         .pipe(dest('prod/styles'));
     };
 
+    let compressResetCSS = () => {
+        return src('styles/reset.css')
+        .pipe(GulpCleanCss({compatibility:'es5'}))
+        .pipe(dest('prod/styles'));
+    };
+
     let transpileAndCompressJS = () => {
         return src('js/main.js')
         .pipe(babel())
         .pipe(javaScriptUglify())
-        .pipe(dest('prod/scripts'))
+        .pipe(dest('prod/js'))
     };
+
 
     let copyFiles = () => {
         return src([
-            'assignment-2--intro-to-internet-programming--cs-275--spring-2026/*.*',
-            '!assignment-2--intro-to-internet-programming--cs-275--spring-2026/**',
-            '!assignment-2--intro-to-internet-programming--cs-275--spring-2026/index.html',
-            '!assignment-2--intro-to-internet-programming--cs-275--spring-2026/img',
-            '!assignment-2--intro-to-internet-programming--cs-275--spring-2026/img/.gitignore',
-            '!assignment-2--intro-to-internet-programming--cs-275--spring-2026/**/*.js'
+            '**/assignment-2--intro-to-internet-programming--cs-275--spring-2026/*.*',
+            '!**/assignment-2--intro-to-internet-programming--cs-275--spring-2026/img/',
+            '!**/assignment-2--intro-to-internet-programming--cs-275--spring-2026/img/.gitignore',
+            '!**/assignment-2--intro-to-internet-programming--cs-275--spring-2026/**/*.js',
+            '!**/assignment-2--intro-to-internet-programming--cs-275--spring-2026/styles/'
         ], {dot:true})
         .pipe(dest('prod'))
     };
+    let imgCopy = () => {
+        return src('img/*.*')
+        .pipe(dest('prod/img'))
+    }
+
+    let copyJSON = () => {
+        return src('json/*.*')
+        .pipe(dest('prod/json'))
+    }
 
     let serveSite = () => {
         browserSync ({
@@ -94,9 +108,12 @@ const {src, dest, series} = require('gulp'),
         transpileAndCompressJS,
         serveSite
     );
-    exports.build = series(
+    exports.default = series(
         comrpressHTML,
         compressCSS,
+        compressResetCSS,
         transpileAndCompressJS,
-        copyFiles
+        copyJSON,
+        copyFiles,
+        imgCopy
     );
