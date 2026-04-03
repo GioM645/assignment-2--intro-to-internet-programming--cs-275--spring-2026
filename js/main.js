@@ -28,16 +28,20 @@ let siteData = (loader) => {
         let albumTitle = document.createElement("h2");
         let albumImage = document.createElement("img");
         let albumReview = document.createElement("p");
+        let albumImageCredit = document.createElement("h3")
         albumSlide.className = "slide";
 
         albumTitle.textContent = current.artist + " - " + current.album;
         albumImage.src = current.cover_image.path;
         albumImage.alt = current.cover_image.alt_content;
         albumReview.textContent = current.review.content;
+        albumImageCredit.textContent = "credit - " + current.cover_image.credit;
 
         albumSlide.appendChild(albumTitle);
-        albumSlide.appendChild(albumReview);
         albumSlide.appendChild(albumImage);
+        albumSlide.appendChild(albumImageCredit);
+        albumSlide.appendChild(albumReview);
+
         slideBoundingBox.appendChild(albumSlide);
     };
     leftArrow.onclick = (event) => {
