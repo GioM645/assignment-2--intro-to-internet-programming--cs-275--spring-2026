@@ -28,20 +28,28 @@ let siteData = (loader) => {
         let albumTitle = document.createElement("h2");
         let albumImage = document.createElement("img");
         let albumReview = document.createElement("p");
+        let albumImageSource = document.createElement("a");
         let albumImageCredit = document.createElement("h3")
-        albumSlide.className = "slide";
+        let slideReview = document.createElement("a");
+        let slideReviewContainer = document.createElement("h4");
 
+        albumSlide.className = "slide";
         albumTitle.textContent = current.artist + " - " + current.album;
         albumImage.src = current.cover_image.path;
         albumImage.alt = current.cover_image.alt_content;
-        albumReview.textContent = current.review.content;
-        albumImageCredit.textContent = "credit - " + current.cover_image.credit;
+        albumReview.textContent = current.review.content + " --" + current.review.source;
+        albumImageSource.href = current.cover_image.url;
+        albumImageSource.text = "Credit - " + current.cover_image.credit;
+        slideReview.href = current.review.url;
+        slideReview.text = "Review Source: " + current.review.source;
 
         albumSlide.appendChild(albumTitle);
         albumSlide.appendChild(albumImage);
+        albumImageCredit.appendChild(albumImageSource);
         albumSlide.appendChild(albumImageCredit);
         albumSlide.appendChild(albumReview);
-
+        slideReviewContainer.appendChild(slideReview);
+        albumSlide.appendChild(slideReviewContainer);
         slideBoundingBox.appendChild(albumSlide);
     };
     leftArrow.onclick = (event) => {
@@ -76,7 +84,7 @@ let siteData = (loader) => {
 
 };
 window.onload = () => {
-    script = document.createElement(`script`);
-    script.setAttribute(`src`, `json/data.json`);
+    script = document.createElement("script");
+    script.setAttribute("src", "json/data.json");
     body.appendChild(script);
 };
